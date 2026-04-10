@@ -28,6 +28,8 @@ The cleanest approach is:
 6. Run solutions inside a temporary sandbox directory that contains only the solution runtime wrapper and the `public/` directory.
 7. Execute problem-owned TypeScript modules through a dedicated worker so the runner can stay small and typed without special Jest loaders.
 
+Draft problems are allowed to exist with only `public/` and `solution/`. Those problems are treated as stubs and are excluded from generation and automated judging until their `private/` files exist.
+
 This gives you deterministic Jest tests, readable fixtures in git, and a real separation between what the solution is allowed to see and what the harness uses privately.
 
 ## Proposed Repository Layout

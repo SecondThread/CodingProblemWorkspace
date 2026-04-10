@@ -1,4 +1,4 @@
-import { discoverProblems } from "../runner/discoverProblems";
+import { discoverProblems, isProblemComplete } from "../runner/discoverProblems";
 import { generateProblemData } from "../runner/generateProblemData";
 
 async function main(): Promise<void> {
@@ -9,11 +9,23 @@ async function main(): Promise<void> {
   }
 
   const problems = discoverProblems();
-  const selectedProblems =
-    problemSelector === "all" ? problems : problems.filter((problem) => problem.slug === problemSelector);
+  const matchedProblem: ProblemLike | undefined =
+    problemSelector === "all" ? undefined : problems.find((problem) => problem.slug === problemSelector);
+
+  let selectedProblems: readonly ProblemLike[];
+
+  if (problemSelector === "all") {
+    selectedProblems = problems.filter((problem) => isProblemComplete(problem));
+  } else if (matchedProblem === undefined) {
+    throw new Error(`No problem matched selector: ${problemSelector}`);
+  } else if (!isProblemComplete(matchedProblem)) {
+    throw new Error(`Problem ${problemSelector} is incomplete and cannot generate private data yet.`);
+  } else {
+    selectedProblems = [matchedProblem];
+  }
 
   if (selectedProblems.length === 0) {
-    throw new Error(`No problem matched selector: ${problemSelector}`);
+    throw new Error("No complete problems are available for generation.");
   }
 
   for (const problem of selectedProblems) {
@@ -27,3 +39,5 @@ void main().catch((error: unknown) => {
   console.error(message);
   process.exitCode = 1;
 });
+
+type ProblemLike = ReturnType<typeof discoverProblems>[number];

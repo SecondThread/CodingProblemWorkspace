@@ -1,6 +1,6 @@
 import type { ProblemPaths } from "../utils/paths";
 import { pathExistsSync, readTextFileSync } from "../utils/fs";
-import { discoverProblems } from "../runner/discoverProblems";
+import { discoverCompleteProblems, discoverProblems } from "../runner/discoverProblems";
 import { validateProblemData } from "../runner/validateProblemData";
 import { runSolutionInSandbox } from "../runner/runSolutionInSandbox";
 import { checkSolutionOutput } from "../runner/checkSolutionOutput";
@@ -53,14 +53,19 @@ async function verifyProblemCase(
 }
 
 export function buildProblemTests(): void {
-  const problems: readonly ProblemPaths[] = discoverProblems();
+  const allProblems: readonly ProblemPaths[] = discoverProblems();
+  const runnableProblems: readonly ProblemPaths[] = discoverCompleteProblems();
 
   describe("coding problems", () => {
     test("at least one problem exists", () => {
-      expect(problems.length).toBeGreaterThan(0);
+      expect(allProblems.length).toBeGreaterThan(0);
     });
 
-    for (const problem of problems) {
+    test("at least one complete problem exists", () => {
+      expect(runnableProblems.length).toBeGreaterThan(0);
+    });
+
+    for (const problem of runnableProblems) {
       describe(problem.slug, () => {
         test("sample case passes", async () => {
           await verifyProblemCase(
@@ -78,4 +83,3 @@ export function buildProblemTests(): void {
     }
   });
 }
-
