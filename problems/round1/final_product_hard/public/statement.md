@@ -21,7 +21,7 @@ Note: **This chapter allows for much larger input than Chapter 1.**
 
 ## Input Format
 
-Input begins with a single integer `T`, the number of test cases. Each case is a single line of three space-separated integers `N`, `A`, and `B`.
+Input begins with a single integer `T`, the number of test cases. Each case is a single line of three space-separated integers `A`, `B`, and `N`.
 
 ## Output Format
 

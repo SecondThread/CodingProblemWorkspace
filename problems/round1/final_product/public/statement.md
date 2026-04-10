@@ -19,7 +19,7 @@ Please **find any sequence** of $2 \times N$ changes you can make to get a final
 
 ## Input Format
 
-Input begins with a single integer `T`, the number of test cases. Each case is a single line of three space-separated integers `N`, `A`, and `B`.
+Input begins with a single integer `T`, the number of test cases. Each case is a single line of three space-separated integers `A`, `B`, and `N`.
 
 ## Output Format
 
