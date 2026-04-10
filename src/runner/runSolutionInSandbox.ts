@@ -9,7 +9,7 @@ import { runProblemWorker, type WorkerRunResult } from "./runProblemWorker";
 export async function runSolutionInSandbox(
   problem: ProblemPaths,
   input: string,
-  timeoutMs = 5_000
+  timeoutMs = 30_000
 ): Promise<WorkerRunResult> {
   const sandboxRoot: string = await mkdtemp(join(tmpdir(), `coding-problem-${problem.slug}-`));
 

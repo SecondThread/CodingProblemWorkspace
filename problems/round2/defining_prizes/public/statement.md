@@ -19,7 +19,7 @@ Please help Tasky determine the maximum number of competitors that can be reward
 
 ## Constraints
 
-- `1 <= T <= 85`
+- `1 <= T <= 100`
 - `1 <= N, M <= 1,000,000`
 - `0 <= A_i <= 1,000,000`
 - `0 <= B_i <= 1,000,000`

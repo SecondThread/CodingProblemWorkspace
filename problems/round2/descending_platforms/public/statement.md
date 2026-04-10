@@ -15,7 +15,7 @@ Can you find such an amazing podium? If there are multiple answers, any will be 
 
 ## Constraints
 
-- `1 <= T <= 100`
+- `1 <= T <= 110`
 - `1 <= N <= 1000`
 - `1 <= M <= 10^12`
 - `1 <= A_i <= 10^12`

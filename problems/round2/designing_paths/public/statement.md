@@ -13,7 +13,7 @@ As CTO (Chief Transportation Officer), you'd like to ensure the campus is suffic
 
 ## Constraints
 
-- `1 <= T <= 90`
+- `1 <= T <= 100`
 - `2 <= N <= 500,000`
 - `1 <= K < N`
 - `1 <= M <= 500,000`

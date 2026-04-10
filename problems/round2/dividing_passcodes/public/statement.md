@@ -10,7 +10,7 @@ Please determine the number of distinct `K`-weak passcodes in the range `[L, R]`
 
 ## Constraints
 
-- `1 <= T <= 80`
+- `1 <= T <= 105`
 - `1 <= L <= R <= 10^2025`
 - `2 <= K <= 25`
 
