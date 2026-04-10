@@ -6,12 +6,30 @@ import { pathExistsSync } from "../utils/fs";
 
 export function discoverProblems(): readonly ProblemPaths[] {
   const problemsRoot: string = getProblemsRoot();
-  const entries: readonly string[] = readdirSync(problemsRoot, { withFileTypes: true })
+  const topEntries: readonly string[] = readdirSync(problemsRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
     .sort((left, right) => left.localeCompare(right));
 
-  return entries.map((slug) => buildProblemPaths(join(problemsRoot, slug)));
+  const problemDirs: string[] = [];
+
+  for (const name of topEntries) {
+    const dirPath: string = join(problemsRoot, name);
+    if (pathExistsSync(join(dirPath, "public"))) {
+      problemDirs.push(dirPath);
+    } else {
+      const subEntries: readonly string[] = readdirSync(dirPath, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => entry.name)
+        .sort((left, right) => left.localeCompare(right));
+
+      for (const sub of subEntries) {
+        problemDirs.push(join(dirPath, sub));
+      }
+    }
+  }
+
+  return problemDirs.map((dir) => buildProblemPaths(dir));
 }
 
 export function isProblemComplete(problem: ProblemPaths): boolean {

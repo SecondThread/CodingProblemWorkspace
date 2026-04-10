@@ -1,4 +1,4 @@
-import type { CheckerArgs, CheckerResult, ProblemChecker } from "../../../src/contracts/problem";
+import type { CheckerArgs, CheckerResult, ProblemChecker } from "../../../../src/contracts/problem";
 
 function normalizeOutput(text: string): string {
   return text.replace(/\r\n/g, "\n").trimEnd();

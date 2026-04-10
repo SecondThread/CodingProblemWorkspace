@@ -1,0 +1,47 @@
+# Crash Course
+
+Alice and Bob are back at their favorite restaurant: Nim Sum Dim Sum.
+
+They are sitting on opposite sides of a long table, with Alice on the left. Between them are $N$ plates (expressed as a string $S_{1..N}$), each containing either **A**lmond Jelly ('`A`') or **B**BQ Bao ('`B`').
+
+Alice is hungry only for almond jelly, and Bob only for BBQ baos. They take turns eating as follows:
+- Alice will select an almond jelly plate of her choice, and pull on the very long tablecloth until that plate is in front of her, sending the prefix of dishes before crashing to the ground. She'll then eat the jelly.
+- Bob will then select a BBQ bao plate of his choice, and pull on the tablecloth until that plate reaches the right end of the table (also knocking over a suffix of dishes), and eat the bao.
+
+This repeats until every dish is either eaten or knocked to the ground.
+
+If on a player's turn there are no remaining dishes of their preferred type, they will skip their turn without doing anything.
+
+If each player wants nothing more than the satisfaction of eating the last remaining dish on table, and both choose which dish to eat based on that, who will eat the final dish?
+
+## Constraints
+
+- `1 <= T <= 95`
+- `1 <= N <= 600,000`
+- `S_{1..N}` consists of characters `A` and `B`
+
+## Input Format
+
+Input begins with a single integer `T`, the number of test cases. For each test case, the first line contains an integer `N` and the second line contains the string `S`.
+
+## Output Format
+
+For the `i`-th test case, print `Case #i:` followed by `Alice` if Alice eats the final dish, or `Bob` if Bob eats the final dish.
+
+## Sample Explanation
+
+In the first test case, the table initially looks like:
+- `[Alice]ABBAAAB[Bob]`
+  - One way Alice can win is by pulling the table cloth three spaces towards her, knocking the `ABB` plates onto the ground, and eating from the fourth plate, leaving:
+- `[Alice]_AAB---[Bob]`
+  - Bob must then pull the tablecloth back and eat the only remaining bao, leaving the following:
+- `[Alice]---_AA_[Bob]`
+  - Alice can then pull the tablecloth, knocking over one empty plate, and eat the first remaining almond jelly, leaving:
+- `[Alice]_A_----[Bob]`
+  - There are no remaining baos, so Bob skips his turn without taking an action.
+- `[Alice]_A_----[Bob]`
+  - Alice can pull the tablecloth, knock over one more empty plate, eat the only remaining dish, and win the game.
+
+In the third test case, Alice must skip her first turn, and Bob will win the game after eating the only bao.
+
+In the fourth test case, Alice must eat the first almond jelly on her first turn, and then Bob will win on his first turn after eating the remaining bao.

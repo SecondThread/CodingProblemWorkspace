@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import type { GeneratedCase, ProblemGenerator } from "../../../src/contracts/problem";
+import type { GeneratedCase, ProblemGenerator } from "../../../../src/contracts/problem";
 import { buildGpuCubesOutput } from "../solution/core";
 
 function readSourceInput(): string {

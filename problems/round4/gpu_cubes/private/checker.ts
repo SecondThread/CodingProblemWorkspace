@@ -1,4 +1,4 @@
-import type { CheckerArgs, CheckerResult, ProblemChecker } from "../../../src/contracts/problem";
+import type { CheckerArgs, CheckerResult, ProblemChecker } from "../../../../src/contracts/problem";
 import { getGpuCubesAlphabet } from "../solution/core";
 
 interface GpuCubesCase {

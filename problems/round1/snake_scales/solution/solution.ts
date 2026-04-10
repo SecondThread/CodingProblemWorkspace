@@ -1,4 +1,4 @@
-import type { ProblemSolution } from "../../../src/contracts/problem";
+import type { ProblemSolution } from "../../../../src/contracts/problem";
 
 const solution: ProblemSolution = (input: string): string => {
   const lines: readonly string[] = input.trim().split("\n");

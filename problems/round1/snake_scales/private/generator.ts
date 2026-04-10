@@ -1,4 +1,4 @@
-import type { GeneratedCase, ProblemGenerator } from "../../../src/contracts/problem";
+import type { GeneratedCase, ProblemGenerator } from "../../../../src/contracts/problem";
 
 function seededRandom(seed: number): () => number {
   let state: number = seed;

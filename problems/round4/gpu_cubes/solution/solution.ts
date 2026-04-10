@@ -1,4 +1,4 @@
-import type { ProblemSolution } from "../../../src/contracts/problem";
+import type { ProblemSolution } from "../../../../src/contracts/problem";
 import { buildGpuCubesOutput } from "./core";
 
 const solution: ProblemSolution = (input: string): string => {

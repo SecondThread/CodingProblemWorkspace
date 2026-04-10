@@ -1,4 +1,4 @@
-import type { ProblemValidator } from "../../../src/contracts/problem";
+import type { ProblemValidator } from "../../../../src/contracts/problem";
 
 function parseIntegerToken(token: string, label: string): number {
   if (!/^\d+$/.test(token)) {
