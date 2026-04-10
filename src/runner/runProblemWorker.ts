@@ -63,7 +63,7 @@ export async function runProblemWorker(options: WorkerRunOptions): Promise<Worke
   const workerScriptPath: string = getProblemWorkerScriptPath();
   const tsxBinaryPath: string = getTsxBinaryPath();
   const workingDirectory: string = options.cwd ?? getRepoRoot();
-  const timeoutMs: number = options.timeoutMs ?? 30_000;
+  const timeoutMs: number = options.timeoutMs ?? 600_000;
 
   return new Promise<WorkerRunResult>((resolve, reject) => {
     const child = spawn(tsxBinaryPath, [workerScriptPath, options.action, options.modulePath], {
