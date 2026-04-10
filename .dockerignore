@@ -1,0 +1,7 @@
+.git
+dist
+node_modules
+.DS_Store
+.gradle
+.kotlin
+build

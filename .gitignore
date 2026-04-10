@@ -1,4 +1,7 @@
+dist/
+node_modules/
 .gradle/
 .kotlin/
 build/
-*.jar
+.DS_Store
+npm-debug.log*

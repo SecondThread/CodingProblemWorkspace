@@ -1,12 +1,21 @@
-FROM gradle:8.8-jdk21 AS build
+FROM node:22-alpine AS build
 WORKDIR /app
 
-COPY . .
-RUN gradle --no-daemon installDist
+COPY package.json package-lock.json tsconfig.json ./
+RUN npm ci
 
-FROM eclipse-temurin:21-jre
+COPY src ./src
+COPY test ./test
+COPY problems ./problems
+
+RUN npm run build
+RUN npm test
+
+FROM node:22-alpine
 WORKDIR /app
 
-COPY --from=build /app/build/install/CodingProblemWorkspace /app/CodingProblemWorkspace
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/problems ./problems
 
-ENTRYPOINT ["/app/CodingProblemWorkspace/bin/CodingProblemWorkspace"]
+ENTRYPOINT ["node", "dist/src/cli.js"]
+CMD ["judge", "codeforces-4a", "sample"]
