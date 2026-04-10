@@ -146,7 +146,7 @@ This is better than just importing `solution/solution.ts` directly into the test
 
 - Produces deterministic full-case text for `private/input.txt` and `private/output.txt`
 - Should not depend on the solution implementation
-- Should be callable from a command like `npm run generate -- watermelon`
+- Should be callable from a command like `yarn generate watermelon`
 
 ### `private/validator.ts`
 
@@ -320,7 +320,7 @@ Code style recommendation:
     "test": "jest",
     "test:problem": "jest --runInBand --",
     "generate": "tsx src/cli/generate.ts",
-    "verify": "npm run typecheck && npm run test"
+    "verify": "yarn typecheck && yarn test"
   }
 }
 ```

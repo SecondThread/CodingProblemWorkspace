@@ -2,13 +2,14 @@
   "name": "coding-problem-workspace",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "jest",
     "test:problem": "jest --runInBand --",
     "generate": "tsx src/cli/generate.ts",
-    "verify": "npm run typecheck && npm run test"
+    "verify": "yarn typecheck && yarn test"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
@@ -20,4 +21,3 @@
     "typescript": "^5.8.3"
   }
 }
-

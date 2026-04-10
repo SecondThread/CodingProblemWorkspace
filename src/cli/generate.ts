@@ -5,7 +5,7 @@ async function main(): Promise<void> {
   const problemSelector: string | undefined = process.argv[2];
 
   if (problemSelector === undefined) {
-    throw new Error("Usage: npm run generate -- <problem-slug|all>");
+    throw new Error("Usage: yarn generate <problem-slug|all>");
   }
 
   const problems = discoverProblems();
@@ -27,4 +27,3 @@ void main().catch((error: unknown) => {
   console.error(message);
   process.exitCode = 1;
 });
-

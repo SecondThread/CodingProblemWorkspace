@@ -15,7 +15,7 @@ function buildOutput(weights: readonly number[]): string {
 
 const generator: ProblemGenerator = {
   generate(): GeneratedCase {
-    const weights: readonly number[] = [1, 2, 3, 4, 99, 100];
+    const weights: readonly number[] = Array.from({ length: 100 }, (_, index) => index + 1);
 
     return {
       input: buildInput(weights),
@@ -25,4 +25,3 @@ const generator: ProblemGenerator = {
 };
 
 export default generator;
-
