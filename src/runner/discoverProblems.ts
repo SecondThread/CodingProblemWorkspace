@@ -30,6 +30,20 @@ export function isProblemComplete(problem: ProblemPaths): boolean {
   return requiredPaths.every((path) => pathExistsSync(path));
 }
 
+export function isProblemGeneratable(problem: ProblemPaths): boolean {
+  const requiredPaths: readonly string[] = [
+    problem.publicStatementPath,
+    problem.publicSampleInputPath,
+    problem.publicSampleOutputPath,
+    problem.solutionEntryPath,
+    problem.privateGeneratorPath,
+    problem.privateValidatorPath,
+    problem.privateCheckerPath
+  ];
+
+  return requiredPaths.every((path) => pathExistsSync(path));
+}
+
 export function discoverCompleteProblems(): readonly ProblemPaths[] {
   return discoverProblems().filter((problem) => isProblemComplete(problem));
 }

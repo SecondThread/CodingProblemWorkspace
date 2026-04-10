@@ -1,8 +1,8 @@
 import type { ProblemSolution } from "../../../src/contracts/problem";
+import { buildGpuCubesOutput } from "./core";
 
-// TODO: implement a construction for the problem.
-const solution: ProblemSolution = (_input: string): string => {
-  throw new Error("Not implemented.");
+const solution: ProblemSolution = (input: string): string => {
+  return buildGpuCubesOutput(input);
 };
 
 export default solution;

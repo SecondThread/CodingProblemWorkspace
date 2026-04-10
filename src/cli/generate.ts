@@ -1,4 +1,4 @@
-import { discoverProblems, isProblemComplete } from "../runner/discoverProblems";
+import { discoverProblems, isProblemComplete, isProblemGeneratable } from "../runner/discoverProblems";
 import { generateProblemData } from "../runner/generateProblemData";
 
 async function main(): Promise<void> {
@@ -15,17 +15,17 @@ async function main(): Promise<void> {
   let selectedProblems: readonly ProblemLike[];
 
   if (problemSelector === "all") {
-    selectedProblems = problems.filter((problem) => isProblemComplete(problem));
+    selectedProblems = problems.filter((problem) => isProblemGeneratable(problem));
   } else if (matchedProblem === undefined) {
     throw new Error(`No problem matched selector: ${problemSelector}`);
-  } else if (!isProblemComplete(matchedProblem)) {
+  } else if (!isProblemGeneratable(matchedProblem)) {
     throw new Error(`Problem ${problemSelector} is incomplete and cannot generate private data yet.`);
   } else {
     selectedProblems = [matchedProblem];
   }
 
   if (selectedProblems.length === 0) {
-    throw new Error("No complete problems are available for generation.");
+    throw new Error("No generatable problems are available for generation.");
   }
 
   for (const problem of selectedProblems) {
