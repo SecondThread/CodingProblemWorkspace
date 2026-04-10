@@ -1,7 +1,0 @@
-dist/
-node_modules/
-.gradle/
-.kotlin/
-build/
-.DS_Store
-npm-debug.log*
