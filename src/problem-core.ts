@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
+// Hidden cases are serialized as blocks so multi-line cases survive round-tripping.
 export const CASE_SEPARATOR = "\n<<CASE>>\n";
 
 export type CaseKind = "sample" | "hidden";
