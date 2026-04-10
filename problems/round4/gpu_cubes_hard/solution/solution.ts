@@ -1,4 +1,4 @@
-import type { ProblemSolution } from "../../../src/contracts/problem";
+import type { ProblemSolution } from "../../../../src/contracts/problem";
 
 // TODO: implement a construction for the problem.
 const solution: ProblemSolution = (_input: string): string => {
