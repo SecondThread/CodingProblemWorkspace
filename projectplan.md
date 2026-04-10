@@ -23,9 +23,10 @@ The cleanest approach is:
 1. Keep every problem self-contained in its own folder under `problems/`.
 2. Split each problem into `public/`, `solution/`, and `private/`.
 3. Store both public sample files and hidden full-data files as plain text.
-4. Treat `private/generator.ts` as the source of truth for rebuilding `private/input.txt` and `private/output.txt`.
-5. Run solutions inside a temporary sandbox directory that contains only the solution runtime wrapper and the `public/` directory.
-6. Run generator, validator, and checker in the host test runner, not inside the solution sandbox.
+4. Use Hacker Cup-style combined case files, with one `public/sample-input.txt` and one `public/sample-output.txt`.
+5. Treat `private/generator.ts` as the source of truth for rebuilding `private/input.txt` and `private/output.txt`.
+6. Run solutions inside a temporary sandbox directory that contains only the solution runtime wrapper and the `public/` directory.
+7. Execute problem-owned TypeScript modules through a dedicated worker so the runner can stay small and typed without special Jest loaders.
 
 This gives you deterministic Jest tests, readable fixtures in git, and a real separation between what the solution is allowed to see and what the harness uses privately.
 
@@ -157,6 +158,7 @@ This is better than just importing `solution/solution.ts` directly into the test
 
 - Takes raw input text and returns raw output text
 - Should be a small pure function where possible
+- Should trust the validated input format instead of re-checking statement bounds
 - Should not know anything about generator, validator, checker, or hidden data
 
 ### `private/checker.ts`
@@ -171,9 +173,8 @@ Use `problems/watermelon/` as the first concrete example.
 
 Problem summary:
 
-- Input: one integer `w`
-- Output: `YES` if the watermelon can be split into two positive even parts
-- Otherwise output `NO`
+- Input: first line `T`, then `T` integers `w`
+- Output: one line per case in the form `Case #x: YES` or `Case #x: NO`
 
 That means the correct rule is:
 
@@ -186,16 +187,16 @@ Recommended example files:
 problems/watermelon/
 ├── public/
 │   ├── statement.md         # problem statement
-│   ├── sample-input.txt     # 8
-│   └── sample-output.txt    # YES
+│   ├── sample-input.txt     # combined Hacker Cup-style sample cases
+│   └── sample-output.txt    # combined Case #x answers
 ├── solution/
 │   └── solution.ts
 └── private/
     ├── generator.ts
     ├── validator.ts
     ├── checker.ts
-    ├── input.txt            # 2
-    └── output.txt           # NO
+    ├── input.txt            # combined hidden cases
+    └── output.txt           # combined hidden answers
 ```
 
 Why this is a good starter problem:
@@ -209,29 +210,31 @@ Recommended module behavior:
 
 ### `problems/watermelon/solution/solution.ts`
 
-- Parse a single integer from stdin
-- Return `YES\n` when `w` is even and greater than `2`
-- Return `NO\n` otherwise
+- Parse Hacker Cup-style input with `T` test cases
+- Return one line per case as `Case #x: YES` or `Case #x: NO`
+- Use the same `w > 2 && w % 2 === 0` rule for each case
+- Do not re-check the `1 <= w <= 100` constraint in the solution; the validator owns that
 
 ### `problems/watermelon/private/validator.ts`
 
 - Trim the input
-- Confirm there is exactly one integer token
-- Confirm the value is in the Codeforces range `1 <= w <= 100`
+- Confirm the first token is the test case count
+- Confirm there are exactly `T` case values after it
+- Confirm each case value is in the range `1 <= w <= 100`
 - Throw a typed validation error if any check fails
 
 ### `problems/watermelon/private/generator.ts`
 
 - For the initial example, generate deterministic hidden data
-- Write `2\n` as `private/input.txt`
-- Write `NO\n` as `private/output.txt`
+- Write combined hidden cases into `private/input.txt`
+- Write combined `Case #x: ...` answers into `private/output.txt`
 
 This is intentionally small. The goal of the first example is to prove the runner design, not to stress performance.
 
 ### `problems/watermelon/private/checker.ts`
 
 - Trim trailing whitespace from expected and actual output
-- Accept only exact `YES` or `NO`
+- Compare exact `Case #x: ...` output lines after normalization
 - Return a readable wrong-answer message when they differ
 
 This checker shape is enough for 4A and still matches the more general checker contract.
@@ -270,7 +273,7 @@ That separation keeps tests predictable and prevents accidental fixture drift.
 The runner should stay small and boring. A good execution flow is:
 
 1. Discover the problem directory.
-2. Load `private/generator.ts`, `private/validator.ts`, and `private/checker.ts` in the host process.
+2. Invoke `private/generator.ts`, `private/validator.ts`, and `private/checker.ts` through a dedicated TypeScript worker.
 3. Read the text fixtures from disk.
 4. Validate the input text.
 5. Start the solution in an isolated temp directory.
@@ -334,8 +337,8 @@ Code style recommendation:
 
 For the first pass, use `problems/watermelon/` as the template problem and make sure:
 
-1. the sample test runs with `8` and expects `YES`
-2. the hidden full-data test runs with `2` and expects `NO`
+1. the sample test runs on a combined Hacker Cup-style sample file
+2. the hidden full-data test runs on a combined hidden file
 3. the solution process can read `public/` files but cannot read anything in `private/`
 
 ## Implementation Phases
