@@ -16,7 +16,7 @@ Given an array $A$, determine the sum of costs to flatten all contiguous subarra
 
 ## Constraints
 
-- `1 <= T <= 90`
+- `1 <= T <= 95`
 - `1 <= N <= 1,000,000`
 - `0 <= A_i < 2^30`
 

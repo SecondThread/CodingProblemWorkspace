@@ -12,7 +12,7 @@ Please **find any sequence** of $2 \times N$ changes you can make to get a final
 
 ## Constraints
 
-- `1 <= T <= 50`
+- `1 <= T <= 56`
 - `1 <= N <= 100`
 - `1 <= A <= 100`
 - `1 <= B <= 100`

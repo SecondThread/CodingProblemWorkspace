@@ -16,7 +16,7 @@ If each player wants nothing more than the satisfaction of eating the last remai
 
 ## Constraints
 
-- `1 <= T <= 95`
+- `1 <= T <= 100`
 - `1 <= N <= 600,000`
 - `S_{1..N}` consists of characters `A` and `B`
 

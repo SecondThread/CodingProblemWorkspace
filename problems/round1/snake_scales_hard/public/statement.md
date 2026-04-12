@@ -12,7 +12,7 @@ Metal Platforms Inc. has tasked you to write a program, "Scale AI", to find the 
 
 ## Constraints
 
-- `1 <= T <= 80`
+- `1 <= T <= 91`
 - `1 <= N <= 500,000`
 - `1 <= A_i <= 10^9`
 
