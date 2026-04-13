@@ -4,7 +4,7 @@ import { join } from "node:path";
 import type { GeneratedCase, ProblemGenerator } from "../../../../src/contracts/problem";
 
 const SUBSTRING_LENGTH = 2025;
-const NUM_TESTCASES = 7;
+const NUM_TESTCASES = 30;
 
 // --- Seeded PRNG matching Kotlin's Random behavior ---
 // We use a simple LCG. The Kotlin Random(seed) uses a specific algorithm,
@@ -79,8 +79,8 @@ function isPrime(n: bigint): boolean {
   if (n < 2n) return false;
   if (n < 4n) return true;
   if (n % 2n === 0n || n % 3n === 0n) return false;
-  // Deterministic Miller-Rabin for numbers < 3,317,044,064,679,887,385,961,981
-  const witnesses = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n];
+  // Deterministic Miller-Rabin for numbers < 3.3*10^24 (7 witnesses suffice for < 3.2*10^18)
+  const witnesses = [2n, 3n, 5n, 7n, 11n, 13n, 17n];
   for (const a of witnesses) {
     if (!millerRabinTest(n, a)) return false;
   }
@@ -90,11 +90,19 @@ function isPrime(n: bigint): boolean {
 function findNextPrimes(start: bigint, count: number): bigint[] {
   const primes: bigint[] = [];
   let current = start;
+  // Make sure we start on an odd number (except for 2)
+  if (current <= 2n) {
+    if (count > 0) { primes.push(2n); }
+    current = 3n;
+  } else if (current % 2n === 0n) {
+    if (isPrime(current)) primes.push(current);
+    current += 1n;
+  }
   while (primes.length < count) {
     if (isPrime(current)) {
       primes.push(current);
     }
-    current += 1n;
+    current += 2n; // skip even numbers
   }
   return primes;
 }

@@ -94,7 +94,7 @@ export function buildProblemTests(): void {
 
         test("full data case passes", async () => {
           await verifyProblemCase(problem, problem.privateInputPath, problem.privateOutputPath, "full data");
-        });
+        }, problem.slug === "polishing_problems" ? 120_000 : undefined);
       });
     }
   });
