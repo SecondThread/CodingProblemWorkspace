@@ -1,0 +1,44 @@
+# Adversarial Attack
+
+The massive progress of Tasky has invited bad actors to test its limits (while also raising questions as to whether humans needs a killswitch for such a powerful technology).
+
+Researchers are aware of "adversarial prompts" based off of $N$ attack words ($W_1, ..., W_N$ of lowercase English letters `a`..`z`). When Tasky's input contains all these words in the exact order $W_1, ..., W_N$, it will crash.
+
+It turns out the words don't actually have to be inputted disjointly to work. An *attack superstring* $S$ will crash Tasky as long as all $N$ words are present as (possibly overlapping) substrings in order, and every letter in the superstring is used by one of those substrings.
+
+Formally, an attack superstring $S_{1..L}$ works if there exists a list of $N$ ranges $[L_i, R_i]$ where:
+* For every $i = 1..N$, attack word $W_i$ occurs as a substring at $[L_i, R_i]$. That is, $S_{L_i..R_i} = W_i$.
+* For all $i < j$, we have $L_i \le L_j$ and $R_i \le R_j$. That is, all $N$ attack word substrings must occur in order $W_1, ..., W_N$.
+* Every index in $S$ must be part of at least one range (i.e. **no extraneous characters allowed**).
+
+For each $L = 1..K$, you'd like to know if there exists a working attack superstring of length $L$. Please find the sum of all such working lengths.
+
+_Note that the words $W_i$ are given in a compressed format, where $W_i$ is compressed to $C_i$ as defined below._
+
+## Constraints
+
+- `1 <= T <= 90`
+- `1 <= N <= 2000`
+- `1 <= K <= 10^6`
+- `1 <= |C_i| <= 2,000` (The length of each compressed word is at most 2,000)
+- `1 <= |W_i| <= 10^6` (The length of each uncompressed word is at most 10^6)
+- At most 4 cases contain a word with an uncompressed length greater than 10^4.
+- There is no explicit bound on the **sum** of lengths of uncompressed strings.
+
+## Input Format
+
+Input begins with an integer `T`, the number of test cases. The first line of each case contains two integers `N` and `K`. `N` lines follow, the i-th of which contains the compressed version attack word `C_i` (a string of only alphanumeric characters).
+
+Numbers in the compressed word indicate how many copies of the following character appear when decompressing. For example, `c3po` should be decompressed to `cpppo`, and `11ab` should be decompressed into `aaaaaaaaaaab`.
+
+## Output Format
+
+For the i-th test case, print `Case #i:` followed by a single integer, the sum of all lengths for which a working attack superstring exists.
+
+## Sample Explanation
+
+In the first sample case, there are no working superstrings of lengths 1 to 8, but there is one superstring of length 9: `sandymeta`. It contains `sand` in 1...4, `andy` in 2...5, and `meta` in 6...9. Since 9 is the only length that works, we add it to the answer, to get a total of 9.
+
+In the second sample, `banana` (length 6) and `bananana` (length 8) are the two working superstrings. The final answer is 6+8 = 14.
+
+In the fourth sample, the decompressed substrings are `aaaaaa` and `aab`. The working superstrings are `aaaaaab` (length 7), `aaaaaaab` (length 8), and `aaaaaaaab` (length 9). Note that, for example `aaaaaacaab` does not work, because it contains a character (`c`) not used by any substring range. The final answer is 7 + 8 + 9 = 24.
