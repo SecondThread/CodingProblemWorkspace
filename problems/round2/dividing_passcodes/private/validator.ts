@@ -44,8 +44,8 @@ const validator: ProblemValidator = {
       }
 
       const k = Number(kStr);
-      if (!Number.isInteger(k) || k < 2 || k > 25) {
-        throw new Error(`Case ${String(c)}: K must be between 2 and 25, got ${String(k)}`);
+      if (!Number.isInteger(k) || k < 2 || k > 20) {
+        throw new Error(`Case ${String(c)}: K must be between 2 and 20, got ${String(k)}`);
       }
     }
   }

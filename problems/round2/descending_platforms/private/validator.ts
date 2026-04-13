@@ -15,8 +15,6 @@ const validator: ProblemValidator = {
     }
 
     let lineIndex = 1;
-    let largeNCount = 0;
-
     for (let c = 1; c <= t; c++) {
       if (lineIndex >= lines.length) {
         throw new Error(`Missing first line for case ${String(c)}.`);
@@ -32,12 +30,8 @@ const validator: ProblemValidator = {
       }
 
       const n = Number(parts[0]!);
-      if (!Number.isInteger(n) || n < 1 || n > 1000) {
-        throw new Error(`Case ${String(c)}: N must be between 1 and 1000, got ${parts[0]!}.`);
-      }
-
-      if (n > 500) {
-        largeNCount++;
+      if (!Number.isInteger(n) || n < 1 || n > 500) {
+        throw new Error(`Case ${String(c)}: N must be between 1 and 500, got ${parts[0]!}.`);
       }
 
       let m: bigint;
@@ -82,12 +76,6 @@ const validator: ProblemValidator = {
           );
         }
       }
-    }
-
-    if (largeNCount > 11) {
-      throw new Error(
-        `At most 11 test cases may have N > 500, but found ${String(largeNCount)}.`
-      );
     }
 
     if (lineIndex !== lines.length) {

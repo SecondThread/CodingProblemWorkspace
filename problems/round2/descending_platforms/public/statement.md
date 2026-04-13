@@ -16,10 +16,9 @@ Can you find such an amazing podium? If there are multiple answers, any will be 
 ## Constraints
 
 - `1 <= T <= 110`
-- `1 <= N <= 1000`
+- `1 <= N <= 500`
 - `1 <= M <= 10^12`
 - `1 <= A_i <= 10^12`
-- `N` exceeds `500` in at most `11` test cases.
 
 ## Input Format
 

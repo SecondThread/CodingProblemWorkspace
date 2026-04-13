@@ -32,6 +32,7 @@ async function verifyProblemCase(
   outputPath: string,
   label: string
 ): Promise<void> {
+  const start: number = Date.now();
   assertProblemLayout(problem);
 
   const input: string = readTextFileSync(inputPath);
@@ -50,6 +51,9 @@ async function verifyProblemCase(
     expectedOutput,
     input
   });
+
+  const elapsed: number = Date.now() - start;
+  console.log(`[${problem.slug}] ${label} passed verification in ${String(elapsed)}ms`);
 }
 
 export function buildProblemTests(): void {
@@ -67,6 +71,18 @@ export function buildProblemTests(): void {
 
     for (const problem of runnableProblems) {
       describe(problem.slug, () => {
+        let problemStart: number;
+
+        beforeAll(() => {
+          problemStart = Date.now();
+          console.log(`[${problem.slug}] starting...`);
+        });
+
+        afterAll(() => {
+          const elapsed: number = Date.now() - problemStart;
+          console.log(`[${problem.slug}] total: ${String(elapsed)}ms`);
+        });
+
         test("sample case passes", async () => {
           await verifyProblemCase(
             problem,

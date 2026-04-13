@@ -1,6 +1,6 @@
 import { buildProblemTests } from "./buildProblemTests";
 
-jest.setTimeout(900_000);
+jest.setTimeout(30_000);
 
 buildProblemTests();
 

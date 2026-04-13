@@ -1,6 +1,6 @@
 import type { ProblemSolution } from "../../../../src/contracts/problem";
 
-const MAXK = 25;
+const MAXK = 20;
 const MOD = 998244353;
 
 function getOverflow(s: string, k: number): number {
